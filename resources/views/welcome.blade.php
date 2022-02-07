@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                     EXE Data Center!
+                     <img src="{{asset('/assets/img/EXE_logistics_Solutions_w_tagline1-(1).png')}}" alt="User" class="main-dashboard-logo" width="50%" >
                 </div>                
             </div>
         </div>

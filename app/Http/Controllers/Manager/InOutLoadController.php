@@ -123,7 +123,7 @@ class InOutLoadController extends Controller
 
             }
             if($request->has('driver_id')){
-                $load->driver_id = $request->driver_id;
+                $load->driver_name = $request->driver_id;
 
             }
             if($request->has('shift')){

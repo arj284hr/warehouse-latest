@@ -1,8 +1,14 @@
 @extends('layouts.manager.app')
 @section('content')
     <?php
-    $xyz = $inOutLoad->id;
+    if (!empty($inOutLoad)) {
+      $xyz = $inOutLoad->id;
     $xyz++ ;
+    }
+
+    else{
+      $xyz=1;
+    }
     ?>
 <div class="container-fluid">
   <div class="row">
@@ -141,12 +147,13 @@
         </div>--}}
          <div class="form-group col-md-2">
           <label for="">Driver Name</label>
-          <select name="driver_id" class ="form-control">
-           <option value="">Select Driver</option>
-           @foreach($drivers as $driver)
-           <option value="{{ $driver->id }}">{{ $driver->first_name.' '.$driver->last_name }}</option>
-           @endforeach
-         </select>
+           <input type="text" name="driver_id" class="form-control"  placeholder="Enter Driver Name">
+         <!-- <select name="driver_id" class ="form-control">-->
+         <!--  <option value="">Select Driver</option>-->
+         <!--  @foreach($drivers as $driver)-->
+         <!--  <option value="{{ $driver->id }}">{{ $driver->first_name.' '.$driver->last_name }}</option>-->
+         <!--  @endforeach-->
+         <!--</select>-->
         </div>
         <div class="form-group col-md-2">
               <label for="">Carrier</label>

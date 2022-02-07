@@ -3,7 +3,8 @@
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" id="menu-toggle">
             <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
         </button>
-        <a class="navbar-brand" href="#"><i class=""></i>Warehouse!</a>        
+        <a class="navbar-brand" style="padding: 8px 30px;" href="#">
+               <span class="nav__logo-name"><img src="{{asset('/assets/img/EXE_logistics_Solutions_w_tagline1-(1).png')}}" alt="User" class="main-dashboard-logo" width="130px"></span></a>        
         {{-- fa fa-rocket fa-4 --}}
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

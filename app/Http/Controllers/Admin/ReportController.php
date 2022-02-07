@@ -21,13 +21,13 @@ use App\Exports\LoadProductivityExport;
 use App\Exports\HourlyPay;
 use App\Exports\HourlyFixPay;
 use App\Exports\FixOnlyPay;
+use DB;
 
 class ReportController extends Controller
 {
     public function customer_invoice(Request $request)
     {
-
-    	 // if ($request->ajax()) {
+      // if ($request->ajax()) {
       //       $loads = InOutLoad::selectRaw('id, date,customer_id, load_project_date,location,bill_to_id')->where('load_project_date',$request->start_date)->get();
       //       return DataTables::of($loads)
       //               ->addIndexColumn()
@@ -40,34 +40,41 @@ class ReportController extends Controller
       //               ->rawColumns(['action'])
       //               ->make(true);
       //   }
-
-         $customers = WareHouse::all();
+ 
+           
+         
+          $customers = WareHouse::all();
+          $locations = InOutLoad::select("location")->whereNotNull('location')->distinct()->get();
           $invoices = InOutLoad::select("*")
                     ->where('customer_id', $request->customer_id)
+                    ->orWhere('location', $request->location)
                     ->whereBetween('load_project_date', [Carbon::parse($request->start_date)->format('Y-m-d 00:00:00' ),Carbon::parse($request->end_date)->format('Y-m-d 23:59:59')])
                     ->paginate(12);
-
-
-
         if ($request->isMethod('post')) {
             if($invoices->count() < 1){
                 $message = 'No Data Found Between These Dates!';
-           return view('admin.reports.customer-invoice', compact('invoices','customers','message'));
+           return view('admin.reports.customer-invoice', compact('invoices','customers','locations','message'));
 
             }
         }
 
          $message = '';
-         return view('admin.reports.customer-invoice', compact('invoices','customers','message'));
+         return view('admin.reports.customer-invoice', compact('invoices','customers','message','locations'));
     }
 
     
-//     public function generate_invoice($id){
+    public function generate_invoice($id){
 
-//      $customers = WareHouse::all();
-//           $invoices = InOutLoad::find($id);
-//          return view('admin.reports.generate_invoice',compact('invoices','customers'));
-//     }
+     $customers = WareHouse::all();
+     $invoices = DB::table('in_out_loads')
+            ->join('ware_houses', 'in_out_loads.customer_id', '=', 'ware_houses.id')
+            ->select('ware_houses.*', 'in_out_loads.*')->where('in_out_loads.id',$id)->first();
+     $detail = DB::table('in_out_loads')
+            ->join('users', 'in_out_loads.customer_id', '=', 'users.warehouse_id')
+            ->select('users.*', 'in_out_loads.*')->where('in_out_loads.id',$id)->first();         
+     // $invoices = InOutLoad::find($id)->join('ware_houses', 'in_out_loads.  customer_id', '=', 'users.id');
+         return view('admin.reports.generate_invoice',compact('invoices','customers','detail'));
+    }
 
     public function carrier_invoice(Request $request)
     {

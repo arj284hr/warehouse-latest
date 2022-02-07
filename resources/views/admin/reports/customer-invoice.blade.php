@@ -46,7 +46,7 @@
 </script> -->
 
     <div class="row">
-        <div class="col-md-3"></div>
+        <div class="col-md-2"></div>
         <div class="col-12 col-md-8 col-lg-8">
             <form action="{{route('admin.customer-invoice')}}" method = "POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
@@ -71,6 +71,18 @@
                 <label for="">End Date</label>
                   <input type="date" class="form-control" name="end_date" id="end_date" required>
               </div>
+
+              
+           <div class="form-group col-4 col-md-4 col-lg-4">
+          <label for="">Location</label>
+          <select name="location" id="" class ="form-control">
+           <option value="">Select Location</option>
+           @foreach($locations as $invoice)
+           <option value="{{ $invoice->location }}">{{ $invoice->location }}</option>
+           @endforeach 
+          </select>  
+          </div>
+                
              
         <div class="form-group col-6 col-md-6 col-lg-6 m-auto">
             <label for="" style="visibility: hidden;">Customer </label>
@@ -89,7 +101,7 @@
     @if($invoices->count() > 0)
     <div class="mb-2 text-right w-100">
         
-
+       
         <a href="{{ route('admin.export-excel') }}"><button type="button" class="btn btn-warning  " data-toggle="modal" data-target="#add_anauncement">
             <i class="fa fa-download"></i> Download
           </button></a>
@@ -165,8 +177,8 @@
                                     N/A
                                     @endif
                                    </td>
-                                   <td>@if( $invoice->location_id )
-                                    {{ $invoice->location_id }}
+                                   <td>@if( $invoice->location )
+                                    {{ $invoice->location }}
                                     @else
                                     N/A
                                     @endif
@@ -273,9 +285,9 @@
                                     N/A
                                     @endif
                                    </td>
-                                   {{-- <td>
+                                  <td>
                                     <a href="{{ route('admin.generate-invoice', $invoice->id ) }}" class = "btn btn-sm btn-warning"><i class = "fa fa-print"></i></a>
-                                   </td> --}}
+                                   </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -290,7 +302,7 @@
 @endif
 
 
-{{-- <script>
+ <script>
     function printDiv(printMe){
         var printContents = document.getElementById(printMe).innerHTML;
         var originalContents = document.body.innerHTML;
@@ -302,5 +314,5 @@
         document.body.innerHTML = originalContents;
 
     }
-</script> --}}
+</script> 
 @endsection

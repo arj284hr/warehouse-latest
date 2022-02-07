@@ -30,7 +30,7 @@ Route::group([ 'prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', '
 		Route::resource('/inoutloads', 'Admin\InOutLoadController');
 		Route::post('/get_ssn', 'Admin\InOutLoadController@get_ssn')->name('get_ssn');
 	    Route::any('/customer-invoice', 'Admin\ReportController@customer_invoice')->name('customer-invoice');
-		// Route::any('/generate-invoice/{id}', 'Admin\ReportController@generate_invoice')->name('generate-invoice');
+		Route::any('/generate-invoice/{id}', 'Admin\ReportController@generate_invoice')->name('generate-invoice');
 		Route::any('/carrier-invoice', 'Admin\ReportController@carrier_invoice')->name('carrier-invoice');
 	    Route::any('/driver-invoice', 'Admin\ReportController@driver_invoice')->name('driver-invoice');
         Route::any('/hourly_report', 'Admin\ReportController@hourly_report')->name('hourly-report');
